@@ -42,6 +42,8 @@ return {
 				"query",
 				"vimdoc",
 				"c",
+				"gdscript",
+				"godot_resource",
 			},
 			incremental_selection = {
 				enable = true,

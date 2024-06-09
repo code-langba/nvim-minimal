@@ -4,8 +4,8 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		-- { "folke/neodev.nvim", opts = {} },
-		{ "folke/lazydev.nvim", opts = {}, ft = "lua" },
+		{ "folke/neodev.nvim", opts = {} },
+		-- { "folke/lazydev.nvim", opts = {}, ft = "lua" },
 	},
 	config = function()
 		-- import lspconfig plugin
@@ -78,6 +78,17 @@ return {
 			local hl = "DiagnosticSign" .. type
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
+
+		-- gdscript
+		local gdscript_config = {
+			capabilities = capabilities,
+			settings = {},
+		}
+		if vim.fn.has("win32") == 1 then
+			-- Windows specific. Requires nmap installed (`winget install nmap`)
+			gdscript_config["cmd"] = { "ncat", "localhost", os.getenv("GDScript_Port") or "6008" }
+		end
+		lspconfig.gdscript.setup(gdscript_config)
 
 		mason_lspconfig.setup_handlers({
 			-- default handler for installed servers
